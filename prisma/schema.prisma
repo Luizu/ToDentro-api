@@ -1,0 +1,56 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-1.1.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id       String @id @default(uuid())
+  name     String
+  email    String @unique
+  password String
+
+  //isTeacher Boolean @default(false)
+
+  ownerOf Club[]
+  wentTo  Event[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Club {
+  id          String @id @default(uuid())
+  name        String @unique
+  description String
+
+  ownerId String
+  owner   Account @relation(fields: [ownerId], references: [id])
+  events  Event[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Event {
+  id        String   @id @default(uuid())
+  date      DateTime
+  startTime DateTime
+  endTime   DateTime
+  slots     Int
+  status    String
+
+  clubId    String
+  club      Club      @relation(fields: [clubId], references: [id])
+  attendies Account[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

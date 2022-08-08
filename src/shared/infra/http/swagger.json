@@ -1,0 +1,187 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "ToDentro Docs",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/account": {
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "Create a new account",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/reqBody/CreateAccount"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Account"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/club/{ownerId}": {
+      "post": {
+        "tags": [
+          "Club"
+        ],
+        "summary": "Create a new club",
+        "parameters": [
+          {
+            "name": "ownerId",
+            "in": "path",
+            "description": "Id of the owner of the club",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/reqBody/CreateClub"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Club"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Club": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "86633558-9689-4c71-93c9-3f306de4c4a7"
+          },
+          "name": {
+            "type": "string",
+            "example": "Category"
+          },
+          "description": {
+            "type": "string",
+            "example": "Description of the Category"
+          },
+          "ownerId": {
+            "type": "string",
+            "example": "86633558-9689-4c71-93c9-3f306de4c4a7"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2020-01-01T00:00:00.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2020-01-01T00:00:00.000Z"
+          }
+        }
+      },
+      "Account": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "86633558-9689-4c71-93c9-3f306de4c4a7"
+          },
+          "name": {
+            "type": "string",
+            "example": "User"
+          },
+          "email": {
+            "type": "string",
+            "example": "email@email.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "password"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2020-01-01T00:00:00.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2020-01-01T00:00:00.000Z"
+          }
+        }
+      }
+    },
+    "reqBody": {
+      "CreateAccount": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "John Doe"
+          },
+          "email": {
+            "type": "string",
+            "example": "john@email.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "123456"
+          }
+        }
+      },
+      "CreateClub": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Club"
+          },
+          "description": {
+            "type": "string",
+            "example": "Description of the Club"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    {
+      "BearerAuth": []
+    }
+  ]
+}
